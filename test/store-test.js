@@ -13,7 +13,7 @@ describe("Store", function () {
         await store.deployed();
 
         const StoreReader = await hre.ethers.getContractFactory("StoreReader");
-        storeReader = await StoreReader.deploy();
+        storeReader = await StoreReader.deploy(store.address);
         await storeReader.deployed();
 
         const Selector = await hre.ethers.getContractFactory("Selector");
@@ -27,14 +27,13 @@ describe("Store", function () {
         console.log("Selector deployed to :", selector.address);
     })
 
-    it("Get selector value for 2 ", async () => {
-        var value = await selector.calcStoreInterfaceIdFor2();
-        console.log(`selector value : ${value}`);
-    })
-
-    it("Get selector value for 3 ", async () => {
-        var value = await selector.calcStoreInterfaceIdFor3();
-        console.log(`selector value : ${value}`);
+    it("Get selector value", async () => {
+        var value2 = await selector.calcStoreInterfaceIdFor2();
+        console.log(`selector for 2 functions : ${value2}`);
+        var value3 = await selector.calcStoreInterfaceIdFor3();
+        console.log(`selector for 3 functions : ${value3}`);
+        var value4 = await selector.calcStoreInterfaceIdFor4();
+        console.log(`selector for 4 functions : ${value4}`);
     })
 
     it("Store and check for value", async () => {
@@ -44,7 +43,7 @@ describe("Store", function () {
     })
 
     it("Read value", async () => {
-        var value = await storeReader.readStoreValue(store.address);
+        var value = await storeReader.readStoreValue();
         expect(value).to.equal(5);
     })
 

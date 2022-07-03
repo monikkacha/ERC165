@@ -21,6 +21,6 @@ contract Store is ERC165, StoreInterfaceId {
         override
         returns (bool)
     {
-        return interfaceID == INTERFACE_ID_2;
+        return interfaceID == INTERFACE_ID_2 || interfaceID == INTERFACE_ID_4;
     }
 }
