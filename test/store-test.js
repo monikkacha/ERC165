@@ -5,6 +5,7 @@ describe("Store", function () {
 
     let store;
     let storeReader;
+    let selector;
 
     before(async function () {
         const Store = await hre.ethers.getContractFactory("Store");
@@ -14,11 +15,26 @@ describe("Store", function () {
         const StoreReader = await hre.ethers.getContractFactory("StoreReader");
         storeReader = await StoreReader.deploy();
         await storeReader.deployed();
+
+        const Selector = await hre.ethers.getContractFactory("Selector");
+        selector = await Selector.deploy();
+        await selector.deployed();
     })
 
     it("Deployment", async () => {
         console.log("Store deployed to :", store.address);
         console.log("StoreReader deployed to :", storeReader.address);
+        console.log("Selector deployed to :", selector.address);
+    })
+
+    it("Get selector value for 2 ", async () => {
+        var value = await selector.calcStoreInterfaceIdFor2();
+        console.log(`selector value : ${value}`);
+    })
+
+    it("Get selector value for 3 ", async () => {
+        var value = await selector.calcStoreInterfaceIdFor3();
+        console.log(`selector value : ${value}`);
     })
 
     it("Store and check for value", async () => {
